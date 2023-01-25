@@ -13,10 +13,11 @@ import dayjs, { Dayjs } from "dayjs";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  onStatusChange: () => void;
 }
 
 const ScheduleMeeting: FunctionComponent<Props> = (props) => {
-  const { isOpen, onClose } = props;
+  const { isOpen, onClose, onStatusChange } = props;
   const [value, setValue] = useState<Dayjs | null>(
     dayjs("2023-01-25T21:11:54")
   );
@@ -24,6 +25,11 @@ const ScheduleMeeting: FunctionComponent<Props> = (props) => {
   const handleChange = (newValue: Dayjs | null) => {
     setValue(newValue);
   };
+
+  function onComplete(){
+    onStatusChange()
+    onClose()
+  }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -52,7 +58,7 @@ const ScheduleMeeting: FunctionComponent<Props> = (props) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={onClose}>
+          <Button autoFocus onClick={onComplete}>
             Schedule
           </Button>
         </DialogActions>

@@ -10,10 +10,16 @@ import BootstrapDialogTitle, { BootstrapDialog } from "./BootstrapDialogTitle";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  onStatusChange: () => void;
 }
 
 const SendEmail: FunctionComponent<Props> = (props) => {
-  const { isOpen, onClose } = props;
+  const { isOpen, onClose, onStatusChange } = props;
+
+  function onComplete(){
+    onStatusChange()
+    onClose()
+  }
 
   return (
     <BootstrapDialog
@@ -33,7 +39,7 @@ const SendEmail: FunctionComponent<Props> = (props) => {
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={onClose}>
+        <Button autoFocus onClick={onComplete}>
           Send
         </Button>
       </DialogActions>
